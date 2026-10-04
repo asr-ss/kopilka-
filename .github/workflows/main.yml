@@ -58,7 +58,7 @@ jobs:
 
             --out Kopilka.apk \
 
-            Kopilka-unsigned.apk
+            Копилка-unsigned.apk
 
           "$BUILD_TOOLS/apksigner" verify Kopilka.apk
 
