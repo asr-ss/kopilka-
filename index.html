@@ -1,0 +1,3705 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+
+<head>
+<link rel="manifest" href="manifest.json">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color" content="#ffffff">
+
+<meta name="mobile-web-app-capable" content="yes">
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Копилка</title>
+
+  <style>
+
+    * {
+
+      box-sizing: border-box;
+
+    }
+
+    body {
+
+      margin: 0;
+
+      font-family: Arial, sans-serif;
+
+      background: #f5f6f8;
+
+      color: #222;
+
+    }
+
+    button,
+
+    input {
+
+      font-family: inherit;
+
+    }
+
+    button {
+
+      -webkit-tap-highlight-color: transparent;
+
+    }
+
+    .app {
+
+      width: 100%;
+
+      max-width: 520px;
+
+      margin: 0 auto;
+
+      min-height: 100vh;
+
+      padding: 20px 20px 100px;
+
+    }
+
+    /* =========================
+
+       ГЛАВНАЯ
+
+    ========================= */
+
+    header {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      margin-bottom: 20px;
+
+    }
+
+    .logo {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+    }
+
+    .logo-icon {
+
+      font-size: 38px;
+
+    }
+
+    .logo h1 {
+
+      margin: 0;
+
+      font-size: 26px;
+
+    }
+
+    .logo p {
+
+      margin: 4px 0 0;
+
+      color: #777;
+
+      font-size: 14px;
+
+    }
+
+    .add-button {
+
+      width: 52px;
+
+      height: 52px;
+
+      border: none;
+
+      border-radius: 50%;
+
+      background: #222;
+
+      color: white;
+
+      font-size: 30px;
+
+      line-height: 1;
+
+      cursor: pointer;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      touch-action: manipulation;
+
+    }
+
+    .add-button:active {
+
+      transform: scale(.92);
+
+    }
+
+    .summary {
+
+      background: white;
+
+      border-radius: 20px;
+
+      padding: 22px;
+
+      margin-bottom: 25px;
+
+      box-shadow: 0 4px 15px rgba(0, 0, 0, .06);
+
+    }
+
+    .summary-title {
+
+      color: #777;
+
+      font-size: 14px;
+
+      margin-bottom: 8px;
+
+    }
+
+    #totalMoney {
+
+      font-size: 32px;
+
+      font-weight: bold;
+
+      margin-bottom: 8px;
+
+    }
+
+    #summaryText {
+
+      color: #777;
+
+      font-size: 14px;
+
+    }
+
+    .home-info {
+
+      background: white;
+
+      border-radius: 20px;
+
+      padding: 22px;
+
+      box-shadow: 0 4px 15px rgba(0, 0, 0, .06);
+
+    }
+
+    .home-info h2 {
+
+      margin: 0 0 8px;
+
+      font-size: 20px;
+
+    }
+
+    .home-info p {
+
+      margin: 0;
+
+      color: #777;
+
+      line-height: 1.5;
+
+    }
+
+    /* =========================
+
+       ЦЕЛИ
+
+    ========================= */
+
+    .goals-screen {
+
+      display: none;
+
+      width: 100%;
+
+      max-width: 520px;
+
+      margin: 0 auto;
+
+      padding: 20px 20px 100px;
+
+    }
+
+    .goals-header {
+
+      margin-bottom: 18px;
+
+    }
+
+    .goals-header h2 {
+
+      margin: 0 0 5px;
+
+      font-size: 24px;
+
+    }
+
+    .goals-header p {
+
+      margin: 0;
+
+      color: #777;
+
+      font-size: 14px;
+
+    }
+
+    .goals-add-button {
+
+      width: 100%;
+
+      border: none;
+
+      border-radius: 14px;
+
+      padding: 14px;
+
+      margin-bottom: 18px;
+
+      background: #222;
+
+      color: white;
+
+      font-size: 15px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+      touch-action: manipulation;
+
+    }
+
+    .goals-add-button:active {
+
+      transform: scale(.98);
+
+    }
+
+    .section-header {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      margin-bottom: 12px;
+
+    }
+
+    .section-header h2 {
+
+      margin: 0;
+
+      font-size: 21px;
+
+    }
+
+    #goalCount {
+
+      color: #777;
+
+      font-size: 14px;
+
+    }
+
+    /* =========================
+
+       КАРТОЧКА ЦЕЛИ
+
+    ========================= */
+
+    .goal-card {
+
+      background: white;
+
+      border-radius: 20px;
+
+      padding: 18px;
+
+      margin-bottom: 15px;
+
+      box-shadow: 0 4px 15px rgba(0, 0, 0, .06);
+
+      transition:
+
+        transform .2s ease,
+
+        box-shadow .2s ease;
+
+    }
+
+    .goal-card:active {
+
+      transform: scale(.98);
+
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .04);
+
+    }
+
+    .goal-header {
+
+      display: flex;
+
+      align-items: flex-start;
+
+      justify-content: space-between;
+
+      gap: 10px;
+
+      margin-bottom: 15px;
+
+    }
+
+    .goal-title {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      min-width: 0;
+
+    }
+
+    .pig-icon {
+
+      width: 48px;
+
+      height: 48px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      background: #f5f5f5;
+
+      border-radius: 14px;
+
+      font-size: 27px;
+
+      flex-shrink: 0;
+
+    }
+
+    .goal-title h3 {
+
+      margin: 0 0 5px;
+
+      font-size: 17px;
+
+      word-break: break-word;
+
+    }
+
+    .goal-money {
+
+      color: #777;
+
+      font-size: 14px;
+
+    }
+
+    .delete-button {
+
+      border: none;
+
+      background: transparent;
+
+      font-size: 20px;
+
+      cursor: pointer;
+
+      padding: 5px;
+
+      touch-action: manipulation;
+
+    }
+
+    .progress {
+
+      width: 100%;
+
+      height: 10px;
+
+      background: #eee;
+
+      border-radius: 20px;
+
+      overflow: hidden;
+
+      margin-bottom: 8px;
+
+    }
+
+    .progress-bar {
+
+      height: 100%;
+
+      background: #222;
+
+      border-radius: 20px;
+
+      transition: width .7s ease;
+
+      position: relative;
+
+      overflow: hidden;
+
+    }
+
+    .progress-bar::after {
+
+      content: "";
+
+      position: absolute;
+
+      top: 0;
+
+      left: -100%;
+
+      width: 100%;
+
+      height: 100%;
+
+      background: linear-gradient(
+
+        90deg,
+
+        transparent,
+
+        rgba(255,255,255,.45),
+
+        transparent
+
+      );
+
+      animation: progressShine 2s infinite;
+
+    }
+
+    @keyframes progressShine {
+
+      0% {
+
+        left: -100%;
+
+      }
+
+      100% {
+
+        left: 100%;
+
+      }
+
+    }
+
+    .progress-info {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      gap: 10px;
+
+      color: #777;
+
+      font-size: 13px;
+
+      margin-bottom: 14px;
+
+    }
+
+    .completed {
+
+      color: #222;
+
+      font-weight: bold;
+
+    }
+
+    .add-money-button {
+
+      width: 100%;
+
+      padding: 13px;
+
+      border: none;
+
+      border-radius: 12px;
+
+      background: #222;
+
+      color: white;
+
+      font-size: 15px;
+
+      cursor: pointer;
+
+      touch-action: manipulation;
+
+    }
+
+    .add-money-button:active {
+
+      transform: scale(.98);
+
+    }
+
+    /* =========================
+
+       ИСТОРИЯ
+
+    ========================= */
+
+    .history-block {
+
+      margin-top: 15px;
+
+      padding-top: 15px;
+
+      border-top: 1px solid #eeeeee;
+
+    }
+
+    .history-title {
+
+      font-size: 14px;
+
+      font-weight: bold;
+
+      margin-bottom: 10px;
+
+      cursor: pointer;
+
+    }
+
+    .history-item {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 9px 0;
+
+      font-size: 13px;
+
+      color: #777;
+
+      border-bottom: 1px solid #f1f1f1;
+
+    }
+
+    .history-item strong {
+
+      color: #222;
+
+      font-size: 14px;
+
+    }
+
+    .history-empty {
+
+      color: #999;
+
+      font-size: 13px;
+
+      padding: 5px 0;
+
+    }
+
+    /* =========================
+
+       ПУСТО
+
+    ========================= */
+
+    .empty {
+
+      background: white;
+
+      border-radius: 20px;
+
+      padding: 35px 20px;
+
+      text-align: center;
+
+      box-shadow: 0 4px 15px rgba(0, 0, 0, .06);
+
+    }
+
+    .empty-icon {
+
+      font-size: 55px;
+
+      margin-bottom: 10px;
+
+    }
+
+    .empty h3 {
+
+      margin: 0 0 8px;
+
+      font-size: 20px;
+
+    }
+
+    .empty p {
+
+      margin: 0 auto 20px;
+
+      max-width: 300px;
+
+      color: #777;
+
+      line-height: 1.5;
+
+    }
+
+    .primary-button {
+
+      border: none;
+
+      background: #222;
+
+      color: white;
+
+      padding: 13px 20px;
+
+      border-radius: 12px;
+
+      font-size: 15px;
+
+      cursor: pointer;
+
+      touch-action: manipulation;
+
+    }
+
+    /* =========================
+
+       СТАТИСТИКА
+
+    ========================= */
+
+    .stats-screen {
+
+      display: none;
+
+      width: 100%;
+
+      max-width: 520px;
+
+      margin: 0 auto;
+
+      padding: 20px 20px 100px;
+
+    }
+
+    .stats-header {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 15px;
+
+      margin-bottom: 20px;
+
+    }
+
+    .stats-header h2 {
+
+      margin: 0;
+
+      font-size: 24px;
+
+    }
+
+    .stats-back {
+
+      width: 42px;
+
+      height: 42px;
+
+      border: none;
+
+      border-radius: 50%;
+
+      background: white;
+
+      font-size: 24px;
+
+      cursor: pointer;
+
+    }
+
+    .stats-card {
+
+      background: white;
+
+      border-radius: 20px;
+
+      padding: 22px;
+
+      margin-bottom: 15px;
+
+      box-shadow: 0 4px 15px rgba(0, 0, 0, .06);
+
+    }
+
+    .stats-icon {
+
+      font-size: 35px;
+
+      margin-bottom: 10px;
+
+    }
+
+    .stats-label {
+
+      color: #777;
+
+      font-size: 14px;
+
+      margin-bottom: 7px;
+
+    }
+
+    .stats-value {
+
+      font-size: 32px;
+
+      font-weight: bold;
+
+    }
+
+    .stats-row {
+
+      display: flex;
+
+      gap: 15px;
+
+      margin-bottom: 15px;
+
+    }
+
+    .small-stats-card {
+
+      flex: 1;
+
+      background: white;
+
+      border-radius: 20px;
+
+      padding: 18px;
+
+      box-shadow: 0 4px 15px rgba(0, 0, 0, .06);
+
+    }
+
+    .small-stats-icon {
+
+      font-size: 27px;
+
+      margin-bottom: 8px;
+
+    }
+
+    .small-stats-label {
+
+      color: #777;
+
+      font-size: 13px;
+
+      margin-bottom: 5px;
+
+    }
+
+    .small-stats-value {
+
+      font-size: 25px;
+
+      font-weight: bold;
+
+    }
+
+    .big-percent {
+
+      font-size: 30px;
+
+      font-weight: bold;
+
+      margin-bottom: 12px;
+
+    }
+
+    .stats-progress {
+
+      width: 100%;
+
+      height: 12px;
+
+      background: #eee;
+
+      border-radius: 20px;
+
+      overflow: hidden;
+
+    }
+
+    .stats-progress-bar {
+
+      height: 100%;
+
+      width: 0%;
+
+      background: #222;
+
+      border-radius: 20px;
+
+      transition: width .4s;
+
+    }
+
+    /* =========================
+
+       НАСТРОЙКИ
+
+    ========================= */
+
+    .settings-screen {
+
+      display: none;
+
+      width: 100%;
+
+      max-width: 520px;
+
+      margin: 0 auto;
+
+      padding: 20px 20px 100px;
+
+    }
+
+    .settings-header {
+
+      margin-bottom: 20px;
+
+    }
+
+    .settings-header h2 {
+
+      margin: 0 0 5px;
+
+      font-size: 24px;
+
+    }
+
+    .settings-header p {
+
+      margin: 0;
+
+      color: #777;
+
+      font-size: 14px;
+
+    }
+
+    .settings-card {
+
+      background: white;
+
+      border-radius: 20px;
+
+      padding: 18px;
+
+      box-shadow: 0 4px 15px rgba(0, 0, 0, .06);
+
+    }
+
+    .settings-button {
+
+  width: 100%;
+
+  padding: 16px 18px;
+
+  margin-bottom: 12px;
+
+  border: none;
+
+  border-radius: 16px;
+
+  background: white;
+
+  color: #222;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  text-align: left;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  cursor: pointer;
+
+  transition: transform 0.2s, box-shadow 0.2s;
+
+}
+
+.settings-button:active {
+
+  transform: scale(0.98);
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+      }
+
+    .settings-button:last-child {
+
+      margin-bottom: 0;
+
+    }
+
+    .settings-button:active {
+
+      transform: scale(.98);
+
+    }
+
+    /* =========================
+
+       МОДАЛКА СОЗДАНИЯ
+
+    ========================= */
+
+    .modal {
+
+      position: fixed;
+
+      inset: 0;
+
+      display: none;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 20px;
+
+      background: rgba(0, 0, 0, .45);
+
+      z-index: 1000;
+
+    }
+
+    .modal.show {
+
+      display: flex;
+
+    }
+
+    .modal-content {
+
+      width: 100%;
+
+      max-width: 430px;
+
+      background: white;
+
+      border-radius: 22px;
+
+      padding: 22px;
+
+    }
+
+    .modal-header {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      margin-bottom: 20px;
+
+    }
+
+    .modal-header h2 {
+
+      margin: 0;
+
+      font-size: 21px;
+
+    }
+
+    .close-button {
+
+      border: none;
+
+      background: transparent;
+
+      font-size: 28px;
+
+      cursor: pointer;
+
+      padding: 5px;
+
+    }
+
+    .form-group {
+
+      margin-bottom: 15px;
+
+    }
+
+    .form-group label {
+
+      display: block;
+
+      margin-bottom: 7px;
+
+      font-size: 14px;
+
+      color: #555;
+
+    }
+
+    .form-group input {
+
+      width: 100%;
+
+      padding: 14px;
+
+      border: 1px solid #ddd;
+
+      border-radius: 12px;
+
+      font-size: 16px;
+
+      outline: none;
+
+    }
+
+    .form-group input:focus {
+
+      border-color: #222;
+
+    }
+
+    .currency-select {
+
+  width: 100%;
+
+  padding: 14px;
+
+  border: 1px solid #ddd;
+
+  border-radius: 12px;
+
+  font-size: 16px;
+
+  background: white;
+
+  color: #222;
+
+  outline: none;
+
+}
+
+.currency-select:focus {
+
+  border-color: #222;
+
+      }
+    .create-button {
+
+      width: 100%;
+
+      padding: 14px;
+
+      border: none;
+
+      border-radius: 12px;
+
+      background: #222;
+
+      color: white;
+
+      font-size: 16px;
+
+      cursor: pointer;
+
+    }
+
+    /* =========================
+
+       МОДАЛКА ДЕНЕГ
+
+    ========================= */
+
+    .money-modal {
+
+      position: fixed;
+
+      inset: 0;
+
+      display: none;
+
+      align-items: flex-end;
+
+      justify-content: center;
+
+      padding: 15px;
+
+      background: rgba(0, 0, 0, .45);
+
+      z-index: 1100;
+
+    }
+
+    .money-modal.show {
+
+      display: flex;
+
+    }
+
+    .money-modal-content {
+
+      width: 100%;
+
+      max-width: 430px;
+
+      background: white;
+
+      border-radius: 24px;
+
+      padding: 22px;
+
+      animation: moneyUp .25s ease;
+
+    }
+
+    @keyframes moneyUp {
+
+      from {
+
+        transform: translateY(30px);
+
+        opacity: 0;
+
+      }
+
+      to {
+
+        transform: translateY(0);
+
+        opacity: 1;
+
+      }
+
+    }
+
+    .money-modal-content h2 {
+
+      margin: 0 0 6px;
+
+      font-size: 22px;
+
+    }
+
+    #moneyGoalName {
+
+      margin: 0 0 18px;
+
+      color: #777;
+
+      font-size: 14px;
+
+    }
+
+    .money-input {
+
+      width: 100%;
+
+      padding: 17px;
+
+      border: 1px solid #ddd;
+
+      border-radius: 14px;
+
+      font-size: 24px;
+
+      text-align: center;
+
+      outline: none;
+
+    }
+
+    .money-input:focus {
+
+      border-color: #222;
+
+    }
+
+    .quick-buttons {
+
+      display: flex;
+
+      gap: 8px;
+
+      margin: 12px 0 18px;
+
+    }
+
+    .quick-button {
+
+      flex: 1;
+
+      border: none;
+
+      border-radius: 12px;
+
+      padding: 11px 5px;
+
+      background: #f1f1f1;
+
+      font-size: 14px;
+
+      cursor: pointer;
+
+    }
+
+    .money-actions {
+
+      display: flex;
+
+      gap: 10px;
+
+    }
+
+    .money-cancel,
+
+    .money-confirm {
+
+      flex: 1;
+
+      border: none;
+
+      border-radius: 12px;
+
+      padding: 14px;
+
+      font-size: 15px;
+
+      cursor: pointer;
+
+    }
+
+    .money-cancel {
+
+      background: #f1f1f1;
+
+      color: #222;
+
+    }
+
+    .money-confirm {
+
+      background: #222;
+
+      color: white;
+
+    }
+
+    /* =========================
+
+       НИЖНЕЕ МЕНЮ
+
+    ========================= */
+
+    .bottom-nav {
+
+      position: fixed;
+
+      left: 50%;
+
+      bottom: 12px;
+
+      transform: translateX(-50%);
+
+      width: calc(100% - 24px);
+
+      max-width: 500px;
+
+      background: white;
+
+      border-radius: 20px;
+
+      padding: 6px;
+
+      display: flex;
+
+      gap: 4px;
+
+      box-shadow: 0 6px 25px rgba(0, 0, 0, .12);
+
+      z-index: 900;
+
+    }
+
+    .nav-button {
+
+      flex: 1;
+
+      border: none;
+
+      background: transparent;
+
+      color: #777;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 4px;
+
+      padding: 8px 5px;
+
+      border-radius: 14px;
+
+      font-size: 12px;
+
+      cursor: pointer;
+
+      touch-action: manipulation;
+
+    }
+
+    .nav-icon {
+
+      font-size: 23px;
+
+      line-height: 1;
+
+    }
+
+    .nav-button.active {
+
+      color: #222;
+
+      font-weight: bold;
+
+      background: #f1f1f1;
+
+    }
+
+    .nav-button:active {
+
+      transform: scale(.94);
+
+    }
+
+    /* =========================
+
+       УВЕДОМЛЕНИЯ
+
+    ========================= */
+
+    .notification {
+
+      position: fixed;
+
+      left: 50%;
+
+      bottom: 90px;
+
+      transform: translate(-50%, 100px);
+
+      background: #222;
+
+      color: white;
+
+      padding: 13px 18px;
+
+      border-radius: 12px;
+
+      opacity: 0;
+
+      transition: .3s ease;
+
+      z-index: 2000;
+
+      pointer-events: none;
+
+      white-space: nowrap;
+
+    }
+
+    .notification.show {
+
+      opacity: 1;
+
+      transform: translate(-50%, 0);
+
+    }
+
+    @media (max-width: 400px) {
+
+      .app,
+
+      .goals-screen,
+
+      .stats-screen,
+
+      .settings-screen {
+
+        padding-left: 14px;
+
+        padding-right: 14px;
+
+      }
+
+      .bottom-nav {
+
+        width: calc(100% - 16px);
+
+        bottom: 8px;
+
+      }
+
+      .nav-button {
+
+        font-size: 11px;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- =========================
+
+       ГЛАВНАЯ
+
+  ========================= -->
+
+  <div class="app" id="homeScreen">
+
+    <header>
+
+      <div class="logo">
+
+        <div class="logo-icon">🐷</div>
+
+        <div>
+
+          <h1>Копилка</h1>
+
+          <p>Копи на свои мечты</p>
+
+        </div>
+
+      </div>
+
+      <button
+
+        type="button"
+
+        class="add-button"
+
+        onclick="openModal()"
+
+      >
+
+        +
+
+      </button>
+
+    </header>
+
+    <div class="summary">
+
+      <div class="summary-title">
+
+        Всего накоплено
+
+      </div>
+
+      <div id="totalMoney">
+
+        0.00 €
+
+      </div>
+
+      <div id="summaryText">
+
+        Начни копить на свою первую мечту
+
+      </div>
+
+    </div>
+
+    <div class="home-info">
+
+      <h2>Добро пожаловать 🐷</h2>
+
+      <p>
+
+        Создавай цели, пополняй копилки и наблюдай,
+
+        как постепенно приближаешься к своим мечтам.
+
+      </p>
+
+    </div>
+
+  </div>
+
+  <!-- =========================
+
+       ЭКРАН ЦЕЛЕЙ
+
+  ========================= -->
+
+  <div class="goals-screen" id="goalsScreen">
+
+    <div class="goals-header">
+
+      <h2>Мои цели 🎯</h2>
+
+      <p>Копи на свои мечты</p>
+
+    </div>
+
+    <button
+
+      type="button"
+
+      class="goals-add-button"
+
+      onclick="openModal()"
+
+    >
+
+      ＋ Создать копилку
+
+    </button>
+
+    <div class="section-header">
+
+      <h2>Мои цели</h2>
+
+      <span id="goalCount">0</span>
+
+    </div>
+
+    <div id="goalsContainer"></div>
+
+  </div>
+
+  <!-- =========================
+
+       ЭКРАН СТАТИСТИКИ
+
+  ========================= -->
+
+  <div class="stats-screen" id="statsScreen">
+
+    <div class="stats-header">
+
+      <button
+
+        type="button"
+
+        class="stats-back"
+
+        onclick="showHome()"
+
+      >
+
+        ←
+
+      </button>
+
+      <h2>Статистика</h2>
+
+    </div>
+
+    <div class="stats-card">
+
+      <div class="stats-icon">💰</div>
+
+      <div class="stats-label">
+
+        Всего накоплено
+
+      </div>
+
+      <div
+
+        class="stats-value"
+
+        id="statsTotal"
+
+      >
+
+        0.00 €
+
+      </div>
+
+    </div>
+
+    <div class="stats-row">
+
+      <div class="small-stats-card">
+
+        <div class="small-stats-icon">🎯</div>
+
+        <div class="small-stats-label">
+
+          Целей
+
+        </div>
+
+        <div
+
+          class="small-stats-value"
+
+          id="statsGoals"
+
+        >
+
+          0
+
+        </div>
+
+      </div>
+
+      <div class="small-stats-card">
+
+        <div class="small-stats-icon">🏆</div>
+
+        <div class="small-stats-label">
+
+          Выполнено
+
+        </div>
+
+        <div
+
+          class="small-stats-value"
+
+          id="statsCompleted"
+
+        >
+
+          0
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="stats-card">
+
+      <div class="stats-label">
+
+        Средний прогресс
+
+      </div>
+
+      <div
+
+        class="big-percent"
+
+        id="statsPercent"
+
+      >
+
+        0%
+
+      </div>
+
+      <div class="stats-progress">
+
+        <div
+
+          class="stats-progress-bar"
+
+          id="statsProgressBar"
+
+        ></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- =========================
+
+       НАСТРОЙКИ
+
+  ========================= -->
+
+  <div class="settings-screen" id="settingsScreen">
+
+    <div class="settings-header">
+
+      <h2>Настройки ⚙️</h2>
+
+      <p>Настройки приложения</p>
+
+    </div>
+
+      <button
+
+ type="button"
+
+  class="settings-button"
+
+  onclick="showNotification('Данные сохраняются автоматически')"
+
+>
+  Данные сохраняются автоматически
+
+
+      <button
+
+  type="button"
+
+  class="settings-button"
+
+  onclick="showNotification('Данные сохраняются автоматически')"
+
+>
+
+  Сохранение данных
+
+</button>
+
+<button
+
+  type="button"
+
+  class="settings-button"
+
+  onclick="showNotification('Валюта: евро €')"
+
+>
+
+  Валюта: евро €
+
+</button>
+
+      >
+
+      
+
+      </button>
+
+      <button
+
+        type="button"
+
+        class="settings-button"
+
+        onclick="clearAllGoals()"
+
+      >
+
+        🗑️ Удалить все цели
+
+      </button>
+
+    </>
+
+  </div>
+
+  <!-- =========================
+
+       МОДАЛКА СОЗДАНИЯ КОПИЛКИ
+
+  ========================= -->
+
+  <div
+
+    class="modal"
+
+    id="goalModal"
+
+  >
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <h2>Новая копилка 🐷</h2>
+
+        <button
+
+          type="button"
+
+          class="close-button"
+
+          onclick="closeModal()"
+
+        >
+
+          ×
+
+        </button>
+
+      </div>
+
+      <div class="form-group">
+
+        <label for="goalName">
+
+          Название цели
+
+        </label>
+
+        <input
+
+          id="goalName"
+
+          type="text"
+
+          placeholder="Например: Новый телефон"
+
+          maxlength="60"
+
+        >
+
+      </div>
+
+      <div class="form-group">
+
+        <label for="goalTarget">
+
+          Сколько нужно накопить?
+
+        </label>
+
+        <input
+
+          id="goalTarget"
+
+          type="number"
+
+          min="0.01"
+
+          step="0.01"
+
+          inputmode="decimal"
+
+          placeholder="1000"
+
+        >
+
+      </div>
+<div class="form-group">
+
+  <label for="goalCurrency">
+
+    Валюта
+
+  </label>
+
+  <select
+
+    id="goalCurrency"
+
+    class="currency-select"
+
+  >
+
+    <option value="EUR">🇪🇺 EUR — Евро (€)</option>
+
+    <option value="USD">🇺🇸 USD — Доллар ($)</option>
+
+    <option value="GBP">🇬🇧 GBP — Фунт (£)</option>
+
+    <option value="RUB">🇷🇺 RUB — Рубль (₽)</option>
+
+    <option value="JPY">🇯🇵 JPY — Иена (¥)</option>
+
+    <option value="CHF">🇨🇭 CHF — Франк (CHF)</option>
+
+    <option value="CNY">🇨🇳 CNY — Юань (¥)</option>
+
+  </select>
+
+</div>
+      <button
+
+        type="button"
+
+        class="create-button"
+
+        onclick="createGoal()"
+
+      >
+
+        Создать копилку
+
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- =========================
+
+       МОДАЛКА ДОБАВЛЕНИЯ ДЕНЕГ
+
+  ========================= -->
+
+  <div
+
+    class="money-modal"
+
+    id="moneyModal"
+
+  >
+
+    <div class="money-modal-content">
+
+      <h2>
+
+        Добавить деньги 💰
+
+      </h2>
+
+      <p id="moneyGoalName">
+
+        Пополнение копилки
+
+      </p>
+
+      <input
+
+        id="moneyInput"
+
+        class="money-input"
+
+        type="number"
+
+        min="0.01"
+
+        step="0.01"
+
+        inputmode="decimal"
+
+        placeholder="0.00"
+
+      >
+
+      <div class="quick-buttons">
+
+        <button
+
+          type="button"
+
+          class="quick-button"
+
+          onclick="setMoneyAmount(10)"
+
+        >
+
+          +10 
+
+        </button>
+
+        <button
+
+          type="button"
+
+          class="quick-button"
+
+          onclick="setMoneyAmount(20)"
+
+        >
+
+          +20 
+
+        </button>
+
+        <button
+
+          type="button"
+
+          class="quick-button"
+
+          onclick="setMoneyAmount(50)"
+
+        >
+
+          +50 
+
+        </button>
+
+      </div>
+
+      <div class="money-actions">
+
+        <button
+
+          type="button"
+
+          class="money-cancel"
+
+          onclick="closeMoneyModal()"
+
+        >
+
+          Отмена
+
+        </button>
+
+        <button
+
+          type="button"
+
+          class="money-confirm"
+
+          onclick="confirmAddMoney()"
+
+        >
+
+          Добавить
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- =========================
+
+       НИЖНЕЕ МЕНЮ
+
+  ========================= -->
+
+  <nav class="bottom-nav">
+
+    <button
+
+      type="button"
+
+      class="nav-button active"
+
+      onclick="showHome()"
+
+    >
+
+      <span class="nav-icon">🏠</span>
+
+      <span>Главная</span>
+
+    </button>
+
+    <button
+
+      type="button"
+
+      class="nav-button"
+
+      onclick="showGoals()"
+
+    >
+
+      <span class="nav-icon">🎯</span>
+
+      <span>Цели</span>
+
+    </button>
+
+    <button
+
+      type="button"
+
+      class="nav-button"
+
+      onclick="showStats()"
+
+    >
+
+      <span class="nav-icon">📊</span>
+
+      <span>Статистика</span>
+
+    </button>
+
+    <button
+
+      type="button"
+
+      class="nav-button"
+
+      onclick="showSettings()"
+
+    >
+
+      <span class="nav-icon">⚙️</span>
+
+      <span>Настройки</span>
+
+    </button>
+
+  </nav>
+
+  <!-- =========================
+
+       УВЕДОМЛЕНИЕ
+
+  ========================= -->
+
+  <div
+
+    class="notification"
+
+    id="notification"
+
+  ></div>
+
+  <script>
+
+    /* =========================
+
+       ДАННЫЕ
+
+    ========================= */
+
+    let goals = [];
+
+    let selectedGoalId = null;
+
+    const STORAGE_KEY = "kopilka_goals";
+const DEFAULT_CURRENCY_KEY = "kopilka_default_currency";
+
+function saveDefaultCurrency() {
+
+  const currency =
+
+    document.getElementById("defaultCurrency").value;
+
+  localStorage.setItem(
+
+    DEFAULT_CURRENCY_KEY,
+
+    currency
+
+  );
+
+  showNotification("Валюта сохранена");
+
+    }
+    const CURRENCIES = {
+
+  EUR: "€",
+
+  USD: "$",
+
+  GBP: "£",
+
+  RUB: "₽",
+
+  JPY: "¥",
+
+  CHF: "CHF",
+
+  CNY: "¥"
+
+};
+
+function formatMoney(amount, currency) {
+
+  const symbol = CURRENCIES[currency] || "€";
+
+  return Number(amount).toFixed(2) + " " + symbol;
+
+    }
+    /* =========================
+
+       ЗАГРУЗКА
+
+    ========================= */
+
+    function loadGoals() {
+
+      try {
+
+        const saved =
+
+          localStorage.getItem(STORAGE_KEY);
+
+        if (saved) {
+
+          goals = JSON.parse(saved);
+
+          if (!Array.isArray(goals)) {
+
+            goals = [];
+
+          }
+
+        }
+
+      } catch (error) {
+
+        goals = [];
+
+      }
+
+      goals.forEach(function(goal) {
+
+        if (!goal.currency) {
+
+  goal.currency = "EUR";
+
+    }
+        if (!Array.isArray(goal.history)) {
+
+          goal.history = [];
+
+        }
+
+        goal.saved =
+
+          Number(goal.saved) || 0;
+
+        goal.target =
+
+          Number(goal.target) || 0;
+
+      });
+
+    }
+
+    /* =========================
+
+       СОХРАНЕНИЕ
+
+    ========================= */
+
+    function saveGoals() {
+
+      localStorage.setItem(
+
+        STORAGE_KEY,
+
+        JSON.stringify(goals)
+
+      );
+
+    }
+
+    /* =========================
+
+       ЭКРАНЫ
+
+    ========================= */
+
+    function setActiveNav(type) {
+
+      document
+
+        .querySelectorAll(".nav-button")
+
+        .forEach(function(button) {
+
+          button.classList.remove("active");
+
+        });
+
+      const button =
+
+        document.querySelector(
+
+          '.nav-button[data-screen="' + type + '"]'
+
+        );
+
+      if (button) {
+
+        button.classList.add("active");
+
+      }
+
+    }
+
+    function activateNavByFunction(functionName) {
+
+      document
+
+        .querySelectorAll(".nav-button")
+
+        .forEach(function(button) {
+
+          button.classList.remove("active");
+
+        });
+
+      const button =
+
+        document.querySelector(
+
+          '.nav-button[onclick="' +
+
+          functionName +
+
+          '()"]'
+
+        );
+
+      if (button) {
+
+        button.classList.add("active");
+
+      }
+
+    }
+
+    function hideAllScreens() {
+
+      document.getElementById("homeScreen").style.display = "none";
+
+      document.getElementById("goalsScreen").style.display = "none";
+
+      document.getElementById("statsScreen").style.display = "none";
+
+      document.getElementById("settingsScreen").style.display = "none";
+
+    }
+
+    function showHome() {
+
+      hideAllScreens();
+
+      document.getElementById("homeScreen").style.display = "block";
+
+      activateNavByFunction("showHome");
+
+      updateHome();
+
+    }
+
+    function showGoals() {
+
+      hideAllScreens();
+
+      document.getElementById("goalsScreen").style.display = "block";
+
+      activateNavByFunction("showGoals");
+
+      renderGoals();
+
+    }
+
+    function showStats() {
+
+      hideAllScreens();
+
+      document.getElementById("statsScreen").style.display = "block";
+
+      activateNavByFunction("showStats");
+
+      updateStatistics();
+
+    }
+
+    function showSettings() {
+
+      hideAllScreens();
+
+      document.getElementById("settingsScreen").style.display = "block";
+
+      activateNavByFunction("showSettings");
+
+    }
+
+    /* =========================
+
+       ГЛАВНАЯ
+
+    ========================= */
+
+    function updateHome() {
+
+      const totals = {};
+
+goals.forEach(function(goal) {
+
+  const currency = goal.currency || "EUR";
+
+  if (!totals[currency]) {
+
+    totals[currency] = 0;
+
+  }
+
+  totals[currency] += Number(goal.saved) || 0;
+
+});
+
+const totalLines = Object.keys(totals).map(function(currency) {
+
+  return formatMoney(totals[currency], currency);
+
+});
+
+document.getElementById("totalMoney").textContent =
+
+  totalLines.length > 0
+
+    ? totalLines.join(" • ")
+
+    : "0.00 €";
+
+      const summaryText =
+
+        document.getElementById("summaryText");
+
+      if (goals.length === 0) {
+
+        summaryText.textContent =
+
+          "Начни копить на свою первую мечту";
+
+      } else {
+
+        summaryText.textContent =
+
+          "У тебя " +
+
+          goals.length +
+
+          " " +
+
+          goalWord(goals.length);
+
+      }
+
+    }
+
+    function goalWord(number) {
+
+      const n = number % 100;
+
+      if (n >= 11 && n <= 14) {
+
+        return "целей";
+
+      }
+
+      switch (number % 10) {
+
+        case 1:
+
+          return "цель";
+
+        case 2:
+
+        case 3:
+
+        case 4:
+
+          return "цели";
+
+        default:
+
+          return "целей";
+
+      }
+
+    }
+
+    /* =========================
+
+       РЕНДЕР ЦЕЛЕЙ
+
+    ========================= */
+
+    function renderGoals() {
+
+      const container =
+
+        document.getElementById("goalsContainer");
+
+      if (!container) return;
+
+      document.getElementById("goalCount").textContent =
+
+        goals.length;
+
+      if (goals.length === 0) {
+
+        container.innerHTML = `
+
+          <div class="empty">
+
+            <div class="empty-icon">
+
+              🐷
+
+            </div>
+
+            <h3>
+
+              Пока нет целей
+
+            </h3>
+
+            <p>
+
+              Создай первую копилку
+
+              и начни копить на свою мечту.
+
+            </p>
+
+            <button
+
+              type="button"
+
+              class="primary-button"
+
+              onclick="openModal()"
+
+            >
+
+              Создать копилку
+
+            </button>
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+      container.innerHTML =
+
+        goals
+
+          .map(function(goal) {
+
+            return createGoalHTML(goal);
+
+          })
+
+          .join("");
+
+    }
+
+    /* =========================
+
+       КАРТОЧКА
+
+    ========================= */
+
+    function createGoalHTML(goal) {
+
+      const saved =
+
+        Number(goal.saved) || 0;
+
+      const target =
+
+        Number(goal.target) || 0;
+
+      const percent =
+
+        target > 0
+
+          ? Math.min(
+
+              Math.round(
+
+                (saved / target) * 100
+
+              ),
+
+              100
+
+            )
+
+          : 0;
+
+      const remaining =
+
+        Math.max(
+
+          target - saved,
+
+          0
+
+        );
+
+      const completed =
+
+        saved >= target &&
+
+        target > 0;
+
+      let historyHTML = "";
+
+      if (
+
+        goal.history &&
+
+        goal.history.length > 0
+
+      ) {
+
+        historyHTML =
+
+          goal.history
+
+            .slice()
+
+            .reverse()
+
+            .map(function(item) {
+
+              const date =
+
+                new Date(item.date);
+
+              return `
+
+                <div class="history-item">
+
+                  <span>
+
+                    ${date.toLocaleDateString("ru-RU")}
+
+                  </span>
+
+                  <strong>
+
+                    +${formatMoney(item.amount, goal.currency)} 
+
+                  </strong>
+
+                </div>
+
+              `;
+
+            })
+
+            .join("");
+
+      } else {
+
+        historyHTML = `
+
+          <div class="history-empty">
+
+            Пока нет пополнений
+
+          </div>
+
+        `;
+
+      }
+
+      return `
+
+        <div class="goal-card">
+
+          <div class="goal-header">
+
+            <div class="goal-title">
+
+              <div class="pig-icon">
+
+                🐷
+
+              </div>
+
+              <div>
+
+                <h3>
+
+                  ${escapeHTML(goal.name)}
+
+                </h3>
+
+                <div class="goal-money">
+
+                  ${formatMoney(saved, goal.currency)} 
+
+                  из
+
+                  ${formatMoney(target, goal.currency)} 
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <button
+
+              type="button"
+
+              class="delete-button"
+
+              onclick="deleteGoal(${goal.id})"
+
+            >
+
+              🗑️
+
+            </button>
+
+          </div>
+
+          <div class="progress">
+
+            <div
+
+              class="progress-bar"
+
+              style="width:${percent}%"
+
+            ></div>
+
+          </div>
+
+          <div class="progress-info">
+
+            <span class="${completed ? "completed" : ""}">
+
+              ${completed
+
+                ? "Цель выполнена 🏆"
+
+                : "Осталось " +
+
+                  formatMoney(remaining, goal.currency) 
+
+                  
+
+              }
+
+            </span>
+
+            <span>
+
+              ${percent}%
+
+            </span>
+
+          </div>
+
+          <button
+
+            type="button"
+
+            class="add-money-button"
+
+            onclick="openMoneyModal(${goal.id})"
+
+          >
+
+            + Добавить деньги
+
+          </button>
+
+          <div class="history-block">
+
+            <div
+
+              class="history-title"
+
+              onclick="toggleHistory(${goal.id})"
+
+            >
+
+              История пополнений
+
+            </div>
+
+            <div id="history-${goal.id}">
+
+              ${historyHTML}
+
+            </div>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }
+
+    /* =========================
+
+       СОЗДАНИЕ
+
+    ========================= */
+
+    function openModal() {
+
+      document
+
+        .getElementById("goalModal")
+
+        .classList.add("show");
+
+      setTimeout(function() {
+
+        document
+
+          .getElementById("goalName")
+
+          .focus();
+
+      }, 100);
+
+    }
+
+    function closeModal() {
+
+      document
+
+        .getElementById("goalModal")
+
+        .classList.remove("show");
+
+      document.getElementById("goalName").value = "";
+
+      document.getElementById("goalTarget").value = "";
+
+    }
+
+    function createGoal() {
+
+      const name =
+
+        document
+
+          .getElementById("goalName")
+
+          .value
+
+          .trim();
+
+      const target =
+
+        Number(
+
+          document
+
+            .getElementById("goalTarget")
+
+            .value
+
+        );
+const currency = document.getElementById("goalCurrency").value;
+      
+      if (!name) {
+
+        showNotification(
+
+          "Введите название цели"
+
+        );
+
+        return;
+
+      }
+
+      if (
+
+        !Number.isFinite(target) ||
+
+        target <= 0
+
+      ) {
+
+        showNotification(
+
+          "Введите правильную сумму"
+
+        );
+
+        return;
+
+      }
+
+      const goal = {
+
+        id: Date.now(),
+
+        name: name,
+
+        target: target,
+
+        currency: currency,
+        
+        saved: 0,
+
+        history: []
+
+      };
+
+      goals.push(goal);
+
+      saveGoals();
+
+      closeModal();
+
+      renderGoals();
+
+      updateHome();
+
+      showNotification(
+
+        "Копилка создана 🐷"
+
+      );
+
+    }
+
+    /* =========================
+
+       ДОБАВЛЕНИЕ ДЕНЕГ
+
+    ========================= */
+
+    function openMoneyModal(id) {
+
+      const goal =
+
+        goals.find(function(item) {
+
+          return item.id === id;
+
+        });
+
+      if (!goal) return;
+
+      selectedGoalId = id;
+const currencySymbol = CURRENCIES[goal.currency] || "€";
+
+document.querySelectorAll(".quick-button").forEach(function(button) {
+
+  const amount = button.textContent.replace(/[^0-9]/g, "");
+
+  button.textContent = "+" + amount + " " + currencySymbol;
+
+});
+      document
+
+        .getElementById("moneyGoalName")
+
+        .textContent =
+
+        goal.name;
+
+      document.getElementById("moneyGoalName").textContent =
+
+  goal.name + " · " + (CURRENCIES[goal.currency] || "€");
+      document
+
+        .getElementById("moneyInput")
+
+        .value = "";
+
+      document
+
+        .getElementById("moneyModal")
+
+        .classList.add("show");
+
+      setTimeout(function() {
+
+        document
+
+          .getElementById("moneyInput")
+
+          .focus();
+
+      }, 100);
+
+    }
+
+    function closeMoneyModal() {
+
+      document
+
+        .getElementById("moneyModal")
+
+        .classList.remove("show");
+
+      selectedGoalId = null;
+
+    }
+
+    function setMoneyAmount(amount) {
+
+      document
+
+        .getElementById("moneyInput")
+
+        .value = amount;
+
+    }
+
+    function confirmAddMoney() {
+
+      const amount =
+
+        Number(
+
+          document
+
+            .getElementById("moneyInput")
+
+            .value
+
+        );
+
+      if (
+
+        !Number.isFinite(amount) ||
+
+        amount <= 0
+
+      ) {
+
+        showNotification(
+
+          "Введите сумму"
+
+        );
+
+        return;
+
+      }
+
+      const goal =
+
+        goals.find(function(item) {
+
+          return item.id === selectedGoalId;
+
+        });
+
+      if (!goal) {
+
+        closeMoneyModal();
+
+        return;
+
+      }
+
+      const available =
+
+        Math.max(
+
+          goal.target - goal.saved,
+
+          0
+
+        );
+
+      const realAmount =
+
+        Math.min(
+
+          amount,
+
+          available
+
+        );
+
+      if (realAmount <= 0) {
+
+        closeMoneyModal();
+
+        showNotification(
+
+          "Эта цель уже выполнена 🏆"
+
+        );
+
+        return;
+
+      }
+
+      goal.saved += realAmount;
+
+      if (!goal.history) {
+
+        goal.history = [];
+
+      }
+
+      goal.history.push({
+
+        amount: realAmount,
+
+        date: new Date().toISOString()
+
+      });
+
+      saveGoals();
+
+      closeMoneyModal();
+
+      renderGoals();
+
+      updateHome();
+
+      updateStatistics();
+
+      if (goal.saved >= goal.target) {
+
+        showNotification(
+
+          "Цель выполнена! 🏆"
+
+        );
+
+      } else {
+
+        showNotification(
+
+          "Деньги добавлены 💰"
+
+        );
+
+      }
+
+    }
+
+    /* =========================
+
+       ИСТОРИЯ
+
+    ========================= */
+
+    function toggleHistory(id) {
+
+      const block =
+
+        document.getElementById(
+
+          "history-" + id
+
+        );
+
+      if (!block) return;
+
+      if (
+
+        block.style.display === "none"
+
+      ) {
+
+        block.style.display = "block";
+
+      } else {
+
+        block.style.display = "none";
+
+      }
+
+    }
+
+    /* =========================
+
+       УДАЛЕНИЕ
+
+    ========================= */
+
+    function deleteGoal(id) {
+
+      const goal =
+
+        goals.find(function(item) {
+
+          return item.id === id;
+
+        });
+
+      if (!goal) return;
+
+      const confirmed =
+
+        confirm(
+
+          'Удалить копилку "' +
+
+          goal.name +
+
+          '"?'
+
+        );
+
+      if (!confirmed) return;
+
+      goals =
+
+        goals.filter(function(item) {
+
+          return item.id !== id;
+
+        });
+
+      saveGoals();
+
+      renderGoals();
+
+      updateHome();
+
+      updateStatistics();
+
+      showNotification(
+
+        "Копилка удалена"
+
+      );
+
+    }
+
+    function clearAllGoals() {
+
+      if (goals.length === 0) {
+
+        showNotification(
+
+          "Целей пока нет"
+
+        );
+
+        return;
+
+      }
+
+      const confirmed =
+
+        confirm(
+
+          "Удалить все цели и историю?"
+
+        );
+
+      if (!confirmed) return;
+
+      goals = [];
+
+      saveGoals();
+
+      renderGoals();
+
+      updateHome();
+
+      updateStatistics();
+
+      showNotification(
+
+        "Все цели удалены"
+
+      );
+
+      showGoals();
+
+    }
+
+    /* =========================
+
+       СТАТИСТИКА
+
+    ========================= */
+
+    function updateStatistics() {
+
+      const totals = {};
+
+goals.forEach(function(goal) {
+
+  const currency = goal.currency || "EUR";
+
+  if (!totals[currency]) {
+
+    totals[currency] = 0;
+
+  }
+
+  totals[currency] += Number(goal.saved) || 0;
+
+});
+
+      let completed = 0;
+
+      let progressSum = 0;
+
+      goals.forEach(function(goal) {
+
+        const saved =
+
+          Number(goal.saved) || 0;
+
+        const target =
+
+          Number(goal.target) || 0;
+
+        total += saved;
+
+        if (target > 0) {
+
+          const percent =
+
+            Math.min(
+
+              (saved / target) * 100,
+
+              100
+
+            );
+
+          progressSum += percent;
+
+          if (saved >= target) {
+
+            completed++;
+
+          }
+
+        }
+
+      });
+
+      const averageProgress =
+
+        goals.length > 0
+
+          ? Math.round(
+
+              progressSum / goals.length
+
+            )
+
+          : 0;
+
+      const statsLines = Object.keys(totals).map(function(currency) {
+
+  return formatMoney(totals[currency], currency);
+
+});
+
+document.getElementById("statsTotal").textContent =
+
+  statsLines.length > 0
+
+    ? statsLines.join(" • ")
+
+    : "0.00 €";
+
+      document
+
+        .getElementById("statsGoals")
+
+        .textContent =
+
+        goals.length;
+
+      document
+
+        .getElementById("statsCompleted")
+
+        .textContent =
+
+        completed;
+
+      document
+
+        .getElementById("statsPercent")
+
+        .textContent =
+
+        averageProgress + "%";
+
+      document
+
+        .getElementById("statsProgressBar")
+
+        .style.width =
+
+        averageProgress + "%";
+
+    }
+
+    /* =========================
+
+       ЗАЩИТА HTML
+
+    ========================= */
+
+    function escapeHTML(value) {
+
+      return String(value)
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
+
+    }
+
+    /* =========================
+
+       УВЕДОМЛЕНИЯ
+
+    ========================= */
+
+    let notificationTimer = null;
+
+    function showNotification(message) {
+
+      const notification =
+
+        document.getElementById(
+
+          "notification"
+
+        );
+
+      notification.textContent =
+
+        message;
+
+      notification.classList.add("show");
+
+      clearTimeout(
+
+        notificationTimer
+
+      );
+
+      notificationTimer =
+
+        setTimeout(function() {
+
+          notification.classList.remove("show");
+
+        }, 2200);
+
+    }
+
+    /* =========================
+
+       ЗАКРЫТИЕ МОДАЛОК
+
+    ========================= */
+
+    document
+
+      .getElementById("goalModal")
+
+      .addEventListener(
+
+        "click",
+
+        function(event) {
+
+          if (
+
+            event.target === this
+
+          ) {
+
+            closeModal();
+
+          }
+
+        }
+
+      );
+
+    document
+
+      .getElementById("moneyModal")
+
+      .addEventListener(
+
+        "click",
+
+        function(event) {
+
+          if (
+
+            event.target === this
+
+          ) {
+
+            closeMoneyModal();
+
+          }
+
+        }
+
+      );
+
+    /* =========================
+
+       ENTER
+
+    ========================= */
+
+    document
+
+      .getElementById("goalName")
+
+      .addEventListener(
+
+        "keydown",
+
+        function(event) {
+
+          if (event.key === "Enter") {
+
+            document
+
+              .getElementById("goalTarget")
+
+              .focus();
+
+          }
+
+        }
+
+      );
+
+    document
+
+      .getElementById("goalTarget")
+
+      .addEventListener(
+
+        "keydown",
+
+        function(event) {
+
+          if (event.key === "Enter") {
+
+            createGoal();
+
+          }
+
+        }
+
+      );
+
+    document
+
+      .getElementById("moneyInput")
+
+      .addEventListener(
+
+        "keydown",
+
+        function(event) {
+
+          if (event.key === "Enter") {
+
+            confirmAddMoney();
+
+          }
+
+        }
+
+      );
+
+    /* =========================
+
+       ЗАПУСК
+
+    ========================= */
+
+    loadGoals();
+
+    updateHome();
+
+    renderGoals();
+
+    updateStatistics();
+
+    showHome();
+
+  </script>
+<script>
+
+if ("serviceWorker" in navigator) {
+
+  window.addEventListener("load", function() {
+
+    navigator.serviceWorker.register("./sw.js");
+
+  });
+
+}
+
+</script>
+</body>
+
+</html>
+  
