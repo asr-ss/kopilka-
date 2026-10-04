@@ -30,43 +30,17 @@ jobs:
 
        run: |
 
-        set -e
+             set -e
 
-           APKSIGNER=$(find "$ANDROID_HOME" -type f -name apksigner | sort -V | tail -1)
+             APKSIGNER=$(find "$ANDROID_HOME" -type f -name apksigner | sort -V | tail -1)
 
-           keytool -genkeypair \
+             keytool -genkeypair -alias kopilka -keyalg RSA -keysize 2048 -validity 10000 -keystore kopilka.keystore -storepass kopilka123 -keypass kopilka123 -dname "CN=Kopilka" -noprompt
 
-             -alias kopilka \
+             "$APKSIGNER" sign --ks kopilka.keystore --ks-pass pass:kopilka123 --key-pass pass:kopilka123 --out Kopilka.apk "Копилка-unsigned.apk"
 
-             -keyalg RSA \
+             "$APKSIGNER" verify Kopilka.apk
 
-             -keysize 2048 \
 
-             -validity 10000 \
-
-             -keystore kopilka.keystore \
-
-             -storepass kopilka123 \
-
-             -keypass kopilka123 \
-
-             -dname "CN=Kopilka" \
-
-             -noprompt
-
-         "$APKSIGNER" sign \
-
-           --ks kopilka.keystore \
-
-           --ks-pass pass:kopilka123 \
-
-           --key-pass pass:kopilka123 \
-
-           --out Kopilka.apk \
-
-           "Копилка-unsigned.apk"
-
-           "$APKSIGNER" verify Kopilka.apk
 
      - name: Upload signed APK
        uses: actions/upload-artifact@v4
