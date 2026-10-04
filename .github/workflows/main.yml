@@ -1,0 +1,73 @@
+name: Build Kopilka APK
+
+on:
+
+  workflow_dispatch:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout
+
+        uses: actions/checkout@v4
+
+      - name: Find APK
+
+        run: |
+
+          ls -lah
+
+          test -f Kopilka-unsigned.apk
+
+      - name: Sign APK
+
+        run: |
+
+          BUILD_TOOLS=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
+
+          keytool -genkeypair \
+
+            -alias kopilka \
+
+            -keyalg RSA \
+
+            -keysize 2048 \
+
+            -validity 10000 \
+
+            -keystore kopilka.keystore \
+
+            -storepass kopilka123 \
+
+            -keypass kopilka123 \
+
+            -dname "CN=Kopilka"
+
+          "$BUILD_TOOLS/apksigner" sign \
+
+            --ks kopilka.keystore \
+
+            --ks-pass pass:kopilka123 \
+
+            --key-pass pass:kopilka123 \
+
+            --out Kopilka.apk \
+
+            Kopilka-unsigned.apk
+
+          "$BUILD_TOOLS/apksigner" verify Kopilka.apk
+
+      - name: Upload signed APK
+
+        uses: actions/upload-artifact@v4
+
+        with:
+
+          name: Kopilka-APK
+
+          path: Kopilka.apk
