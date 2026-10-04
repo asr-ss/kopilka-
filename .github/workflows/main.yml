@@ -12,70 +12,66 @@ jobs:
 
     steps:
 
-      - name: Checkout
+     - name: Checkout
 
-        uses: actions/checkout@v4
+       uses: actions/checkout@v4
 
-      - name: Find APK
+     - name: Find APK
 
-        run: |
+       run: |
 
           ls -lah
 
           test -f "Копилка-unsigned.apk"
 
-      - name: Sign APK
+     - name: Sign APK
 
-        run: |
+       shell: bash
 
-          APKSIGNER=$(find "$ANDROID_HOME" -type f -name apksigner | sort -V | tail -1)
+       run: |
 
-          if [ -z "$APKSIGNER" ]; then
+        set -e
 
-            echo "apksigner not found"
+           APKSIGNER=$(find "$ANDROID_HOME" -type f -name apksigner | sort -V | tail -1)
 
-            exit 1
+           keytool -genkeypair \
 
-          fi
+             -alias kopilka \
 
-          keytool -genkeypair \
+             -keyalg RSA \
 
-            -alias kopilka \
+             -keysize 2048 \
 
-            -keyalg RSA \
+             -validity 10000 \
 
-            -keysize 2048 \
+             -keystore kopilka.keystore \
 
-            -validity 10000 \
+             -storepass kopilka123 \
 
-            -keystore kopilka.keystore \
+             -keypass kopilka123 \
 
-            -storepass kopilka123 \
+             -dname "CN=Kopilka" \
 
-            -keypass kopilka123 \
+             -noprompt
 
-            -dname "CN=Kopilka"
+         "$APKSIGNER" sign \
 
-          "$APKSIGNER" sign \
+           --ks kopilka.keystore \
 
-            --ks kopilka.keystore \
+           --ks-pass pass:kopilka123 \
 
-            --ks-pass pass:kopilka123 \
+           --key-pass pass:kopilka123 \
 
-            --key-pass pass:kopilka123 \
+           --out Kopilka.apk \
 
-            --out Kopilka.apk \
+           "Копилка-unsigned.apk"
 
-            "Копилка-unsigned.apk"
+           "$APKSIGNER" verify Kopilka.apk
 
-          "$APKSIGNER" verify Kopilka.apk
+     - name: Upload signed APK
+       uses: actions/upload-artifact@v4
+       with:
 
-      - name: Upload signed APK
+         name: Kopilka-APK
 
-        uses: actions/upload-artifact@v4
-
-        with:
-
-          name: Kopilka-APK
-
-          path: Kopilka.apk
+         path: Kopilka.apk
