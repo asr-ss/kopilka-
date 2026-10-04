@@ -22,13 +22,21 @@ jobs:
 
           ls -lah
 
-          test -f Kopilka-unsigned.apk
+          test -f "Копилка-unsigned.apk"
 
       - name: Sign APK
 
         run: |
 
-          BUILD_TOOLS=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
+          APKSIGNER=$(find "$ANDROID_HOME" -type f -name apksigner | sort -V | tail -1)
+
+          if [ -z "$APKSIGNER" ]; then
+
+            echo "apksigner not found"
+
+            exit 1
+
+          fi
 
           keytool -genkeypair \
 
@@ -48,7 +56,7 @@ jobs:
 
             -dname "CN=Kopilka"
 
-          "$BUILD_TOOLS/apksigner" sign \
+          "$APKSIGNER" sign \
 
             --ks kopilka.keystore \
 
@@ -58,9 +66,9 @@ jobs:
 
             --out Kopilka.apk \
 
-            Копилка-unsigned.apk
+            "Копилка-unsigned.apk"
 
-          "$BUILD_TOOLS/apksigner" verify Kopilka.apk
+          "$APKSIGNER" verify Kopilka.apk
 
       - name: Upload signed APK
 
